@@ -1,0 +1,46 @@
+package main1
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
+type article struct {
+	ID      int
+	Status  bool
+	Title   string
+	Content string
+}
+
+var data = []article{
+	{1, true, "Article 1", "Article 1 pro content"},
+	{2, true, "Article 2", "Article 2 pro content"},
+}
+
+func ReadArcticles(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "application/json")
+	if r.Method == "GET" {
+		result, err := json.Marshal(data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Write(result)
+	} else if r.Method == "POST" {
+
+	}
+	switch r.Method {
+	case "GET":
+	case "POST":
+	case "PUT":
+	}
+	http.Error(w, "", 900)
+	return
+}
+
+func main() {
+	http.HandleFunc("/articles", ReadArcticles)
+	fmt.Println("server is starting")
+	http.ListenAndServe(":12344", nil)
+}
