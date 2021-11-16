@@ -5,11 +5,28 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	respArticle "km-kelas-e/controller/articles/response"
-	"km-kelas-e/middleware"
-
-	m_articles "km-kelas-e/model/articles"
+	"km-kelas-e/features/articles"
+	presentation_response "km-kelas-e/features/articles/presentation/response"
 )
+
+type ArticlesHandler struct {
+	articleBussiness articles.Bussiness
+}
+
+func NewArticleHandler(ab articles.Bussiness) *ArticlesHandler {
+	return &ArticlesHandler{
+		articleBussiness: ab,
+	}
+}
+
+func (ah *ArticlesHandler) GetAllArticle(c echo.Context) error {
+	result := ah.articleBussiness.GetAllData("")
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "hope all feeling well",
+		"data":    presentation_response.FromCoreSlice(result),
+	})
+}
 
 // func getArticle(c echo.Context) error {
 
@@ -22,18 +39,18 @@ import (
 // 	}
 // }
 
-func GetAllArticle(c echo.Context) error {
-	result, err := m_articles.SelectAll()
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
-	}
+// func GetAllArticle(c echo.Context) error {
+// 	result, err := m_articles.SelectAll()
+// 	if err != nil {
+// 		return c.JSON(http.StatusInternalServerError, err)
+// 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"claims":  middleware.ExtractClaim(c),
-		"message": "hope all feeling well",
-		"data":    respArticle.FromModelSlice(result),
-	})
-}
+// 	return c.JSON(http.StatusOK, map[string]interface{}{
+// 		"claims":  middleware.ExtractClaim(c),
+// 		"message": "hope all feeling well",
+// 		"data":    respArticle.FromModelSlice(result),
+// 	})
+// }
 
 // func addArticle(c echo.Context) error {
 // 	newArticle := Article{}
