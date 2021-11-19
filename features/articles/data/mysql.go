@@ -21,8 +21,8 @@ func (ar *mysqlArticleRepository) InsertData(data articles.Core) (resp articles.
 }
 
 func (ar *mysqlArticleRepository) SelectData(title string) (resp []articles.Core) {
-	record := []Article{}
-	if err := ar.Conn.Find(&record).Error; err != nil {
+	var record []Article
+	if err := ar.Conn.Preload("TagArticle").Find(&record).Error; err != nil {
 		return []articles.Core{}
 	}
 	return toCoreList(record)

@@ -13,10 +13,11 @@ type Presenter struct {
 
 func Init() Presenter {
 
-	articleData := _article_data.NewMongoArticleRepository(config.DB)
+	articleData := _article_data.NewArticleRepository(config.DB)
 	articleBussiness := _article_bussiness.NewAricleBussiness(articleData)
+	articlePresentation := _article_presentation.NewArticleHandler(articleBussiness)
 
 	return Presenter{
-		ArticlePresentation: _article_presentation.NewArticleHandler(articleBussiness),
+		ArticlePresentation: articlePresentation,
 	}
 }

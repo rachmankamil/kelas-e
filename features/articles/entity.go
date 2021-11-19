@@ -1,12 +1,27 @@
 package articles
 
-import "time"
+import (
+	"time"
+)
 
 type Core struct {
 	ID        int
 	Title     string
 	Status    bool
 	Content   string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	User      User
+}
+
+type User struct {
+	Name  string
+	Media string
+}
+
+type CategoryCore struct {
+	ID        int
+	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

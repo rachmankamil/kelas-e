@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"km-kelas-e/features/articles"
 
 	"gorm.io/gorm"
@@ -8,14 +9,30 @@ import (
 
 type Article struct {
 	gorm.Model
-	Status  bool
-	Title   string `gorm:"column:article_title"`
-	Content string `gorm:"column:raw_content"`
+	Status     bool
+	Title      string `gorm:"column:article_title"`
+	Content    string `gorm:"column:raw_content"`
+	CategoryID uint
+	Category   CategoryArticle `gorm:"foreignKey:category_id"`
+	TagArticle []TagArticle    `gorm:"many2many:articles_tag"`
+}
+
+type CategoryArticle struct {
+	gorm.Model
+	Name   string `gorm:"type:varchar(50)"`
+	Status bool
+}
+
+type TagArticle struct {
+	gorm.Model
+	Name   string `gorm:"type:varchar(50)"`
+	Status bool
 }
 
 //DTO
 
 func (a *Article) toCore() articles.Core {
+	fmt.Printf("%+v\n\n", a)
 	return articles.Core{
 		ID:        int(a.ID),
 		Title:     a.Title,

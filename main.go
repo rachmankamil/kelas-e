@@ -15,5 +15,5 @@ func main() {
 	e := routes.New()
 
 	//starting the server
-	e.Start(":1234")
+	e.Start(":9900")
 }

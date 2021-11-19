@@ -15,5 +15,5 @@ func InitDB() {
 		panic(err)
 	}
 
-	DB = db
+	DB = db.Debug()
 }
