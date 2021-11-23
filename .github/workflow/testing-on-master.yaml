@@ -1,0 +1,30 @@
+name: testing
+
+on:
+  push:
+
+jobs:
+  testing:
+    name: api unittest
+    runs-on: ubuntu-latest
+    container: golang:1.17-alpine3.14
+    #kalau perlu db ketika test
+    services:
+      mysql:
+        image: mariadb:10.1
+        env:
+          MYSQL_ROOT_PASSWORD: masukaja
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: action/checkout@v2
+      - name: create db
+        run: |
+          apt-get update
+          apt-get install -y mariadb-client
+          mysql --host mysql -uroot -pmasukaja -e "CREATE DATABASE IF NOT EXISTS kelas-e"
+      - name: running unitest
+        run: |
+          go mod tidy
+          go test ./.. -v
