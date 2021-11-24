@@ -10,7 +10,6 @@ type Article struct {
 	ID        int       `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	Status    bool      `json:"status"`
 	Title     string    `json:"title"`
 	Content   string    `json:"content"`
 }
@@ -20,7 +19,6 @@ func FromCore(core articles.Core) Article {
 		ID:        core.ID,
 		CreatedAt: core.CreatedAt,
 		UpdatedAt: core.UpdatedAt,
-		Status:    core.Status,
 		Title:     core.Title,
 		Content:   core.Content,
 	}

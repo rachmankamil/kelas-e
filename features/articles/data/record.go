@@ -9,12 +9,13 @@ import (
 
 type Article struct {
 	gorm.Model
-	Status     bool
-	Title      string `gorm:"column:article_title"`
-	Content    string `gorm:"column:raw_content"`
-	CategoryID uint
-	Category   CategoryArticle `gorm:"foreignKey:category_id"`
-	TagArticle []TagArticle    `gorm:"many2many:articles_tag"`
+	Status    bool
+	Title     string `gorm:"column:article_title"`
+	Content   string `gorm:"column:raw_content"`
+	Publisher string `gorm:"column:pub"`
+	// CategoryID uint
+	// Category   CategoryArticle `gorm:"foreignKey:category_id"`
+	// TagArticle []TagArticle    `gorm:"many2many:articles_tag"`
 }
 
 type CategoryArticle struct {
@@ -49,4 +50,8 @@ func toCoreList(resp []Article) []articles.Core {
 		a = append(a, resp[key].toCore())
 	}
 	return a
+}
+
+func fromCore(core articles.Core) Article {
+	return Article{}
 }

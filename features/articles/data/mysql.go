@@ -17,7 +17,13 @@ func NewArticleRepository(conn *gorm.DB) articles.Data {
 }
 
 func (ar *mysqlArticleRepository) InsertData(data articles.Core) (resp articles.Core, err error) {
-	return articles.Core{}, nil
+	record := fromCore(data)
+
+	if err := ar.Conn.Create(&record).Error; err != nil {
+		return articles.Core{}, err
+	}
+
+	return data, nil
 }
 
 func (ar *mysqlArticleRepository) SelectData(title string) (resp []articles.Core) {

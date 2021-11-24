@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"km-kelas-e/features/articles"
+	presentation_request "km-kelas-e/features/articles/presentation/request"
 	presentation_response "km-kelas-e/features/articles/presentation/response"
 )
 
@@ -52,19 +53,20 @@ func (ah *ArticlesHandler) GetAllArticle(c echo.Context) error {
 // 	})
 // }
 
-// func addArticle(c echo.Context) error {
-// 	newArticle := Article{}
-// 	c.Bind(&newArticle)
+func (ah *ArticlesHandler) AddArticle(c echo.Context) error {
+	var newArticle presentation_request.Article
+	c.Bind(&newArticle)
 
-// 	if err := DB.Save(&newArticle).Error; err != nil {
-// 		return c.JSON(http.StatusBadRequest, err)
-// 	}
+	resp, err := ah.articleBussiness.CreateData(presentation_request.ToCore(newArticle))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
 
-// 	return c.JSON(http.StatusAccepted, map[string]interface{}{
-// 		"message": "hope all feeling well",
-// 		"data":    newArticle,
-// 	})
-// }
+	return c.JSON(http.StatusAccepted, map[string]interface{}{
+		"message": "hope all feeling well",
+		"data":    presentation_response.FromCore(resp),
+	})
+}
 
 // func updateArticle(c echo.Context) error {
 

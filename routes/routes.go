@@ -47,7 +47,7 @@ func New() *echo.Echo {
 	// article.Use()
 	// e.GET("/article/:id", getArticle)
 	// e.GET("", c_articles.GetAllArticle, middleware.BasicAuth(our_middleware.BasicAuth))
-	// e.POST("/article", addArticle)
+	e.POST("/articles", presenter.ArticlePresentation.AddArticle)
 	// e.PUT("/article/:id", updateArticle)
 
 	return e

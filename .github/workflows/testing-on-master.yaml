@@ -1,7 +1,9 @@
 name: testing
 
 on:
-  push:
+  pull-request:
+    branch:
+      - master
 
 jobs:
   testing:

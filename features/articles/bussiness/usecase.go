@@ -20,14 +20,14 @@ func NewAricleBussiness(artData articles.Data) articles.Bussiness {
 }
 
 func (au *articlesUsecase) CreateData(data articles.Core) (resp articles.Core, err error) {
-	// if err := au.validate.Struct(data); err != nil {
-	// 	return articles.Core{}, err
-	// }
+	if err := au.validate.Struct(data); err != nil {
+		return articles.Core{}, err
+	}
 
-	// resp, err = au.articleData.InsertData(data)
-	// if err != nil {
-	// 	return articles.Core{}, err
-	// }
+	resp, err = au.articleData.InsertData(data)
+	if err != nil {
+		return articles.Core{}, err
+	}
 	return articles.Core{}, nil
 }
 
