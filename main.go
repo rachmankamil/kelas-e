@@ -8,7 +8,7 @@ import (
 
 func main() {
 	//initiateDB
-	config.InitDB()
+	config.InitDB("kelas_e")
 	migrate.AutoMigrate()
 
 	//initRoutes

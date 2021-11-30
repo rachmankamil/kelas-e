@@ -7,10 +7,10 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() {
+func InitDB(dbname string) {
 
 	var err error
-	db, err := gorm.Open(mysql.Open("root:masukaja@tcp(37.59.55.185:3306)/kelas-e?parseTime=true"), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open("root:masukaja@tcp(localhost:3306)/"+dbname+"?parseTime=true"), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
